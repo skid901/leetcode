@@ -2,21 +2,15 @@ class Solution:
     def trap(self, height: List[int]) -> int:
         if not height:
             return 0
-        
-        trapped_water = 0
-        
-        left_idx, right_idx = 0, len(height) - 1
-        left_max, right_max = 0, 0
-        
-        while left_idx < right_idx:
-            left_max = max(left_max, height[left_idx])
-            right_max = max(right_max, height[right_idx])
-            
-            if left_max <= right_max:
-                trapped_water += left_max - height[left_idx]
-                left_idx += 1
+        rtn = 0
+        l, r = 0, len(height) - 1
+        l_max, r_max = height[l], height[r]
+        while l < r:
+            l_max, r_max = max(l_max, height[l]), max(r_max, height[r])
+            if l_max < r_max:
+                rtn += l_max - height[l]
+                l += 1
             else:
-                trapped_water += right_max - height[right_idx]
-                right_idx -= 1
-        
-        return trapped_water
+                rtn += r_max - height[r]
+                r -= 1
+        return rtn
